@@ -13,13 +13,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:text="imifai"
+        android:text="imif"
         android:paddingTop="30dp"
-        android:layout_centerVertical="false"
-        android:layout_centerHorizontal="true"
-        android:textColor="@android:color/white"
+        android:textColor="#78ffffff"
         android:textSize="80sp"
-        android:textIsSelectable="false"/>
+        android:textIsSelectable="false"
+        android:layout_marginLeft="81dp"
+        android:layout_marginStart="81dp"
+        android:layout_alignTop="@+id/title2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title2"
+        android:text="ai"
+        android:paddingTop="30dp"
+        android:textColor="#c8ffffff"
+        android:textSize="80sp"
+        android:textIsSelectable="false"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/title"
+        android:layout_toEndOf="@+id/title"/>
 
 
 </RelativeLayout>
