@@ -8,6 +8,9 @@ lt application files
 # Java class files
 *.class
 
+#Ignore me
+.idea/
+
 # Generated files
 bin/
 gen/
