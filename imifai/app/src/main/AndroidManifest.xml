@@ -6,6 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name="com.orm.SugarApp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -20,5 +21,4 @@
         </activity>
         <activity android:name=".Camera"></activity>
     </application>
-
 </manifest>
