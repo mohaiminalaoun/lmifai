@@ -5,8 +5,6 @@ import android.net.Uri;
 import com.orm.SugarRecord;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class Database {
         }
     }
 
-    public HashMap<Uri, List<String>> getImages(String tag){
+    public List<ImageRecord> getImages(String tag){
         List<ImageTag> imageTags = ImageTag.find(ImageTag.class, "tag = ?", tag);
 
         HashMap<Uri, List<String>> images= new HashMap<>();
@@ -45,10 +43,15 @@ public class Database {
                 images.put(imgTag.getUri(),tags);
             }
         }
-        return images;
+        ArrayList<ImageRecord> records=new ArrayList<>();
+        for (HashMap.Entry<Uri, List<String>> entry : images.entrySet()) {
+            records.add(new ImageRecord(entry.getKey(),entry.getValue()));
+        }
+        return records;
     }
 
-    public class ImageTag extends SugarRecord{
+
+    private class ImageTag extends SugarRecord{
         Uri img;
         String tag;
 
