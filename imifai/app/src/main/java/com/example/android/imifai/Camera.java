@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import java.util.StringTokenizer;
 
 public class Camera extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,30 +32,39 @@ public class Camera extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                ex.printStackTrace();
+            }
+            if (photoFile != null) {
+                Log.d("DispatchTakePicture","taking pic");
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+            //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
-    @Override
+   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Log.d("CAMERA", extras.toString());
-            File photo = null;
-
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "JPEG_" + timeStamp + "_";
-
-            //createDirectoryAndSaveFile(imageBitmap, imageFileName);
-            try {
-                photo = createImageFile();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Log.d("Exception", "imagefilecreationexception");
-            }
+            Log.d("Camera onResult","Pic taken");
+            galleryAddPic();
 
         }
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 
@@ -63,11 +74,6 @@ public class Camera extends AppCompatActivity {
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
-        Boolean test = storageDir.isDirectory();
-        Log.d("Directory exists?", test.toString());
-        Log.d("Camera", "About to create file");
-        Log.d("Camera storagDir", storageDir.toString());
-        isExternalStorageWritable();
 
         int permissionCheck = this.checkSelfPermission
                 (Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -76,8 +82,6 @@ public class Camera extends AppCompatActivity {
             this.requestPermissions(new String[]
                     {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
 
-
-
         File image = File.createTempFile(
                 imageFileName,   //prefix
                 ".jpg",          //suffix
@@ -85,18 +89,9 @@ public class Camera extends AppCompatActivity {
         );
         Log.d("TEMP", "Temp file created");
         // Save a file: path for use with ACTION_VIEW intents
-        String mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         Log.d("CAMERA", "Photo Path :" +mCurrentPhotoPath);
         return image;
-    }
-
-    public void isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            Log.d("Writeable", "Yes");
-        } else {
-            Log.d("Writeable", "False");
-        }
     }
 
 }
