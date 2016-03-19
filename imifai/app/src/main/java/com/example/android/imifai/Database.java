@@ -1,9 +1,6 @@
 package com.example.android.imifai;
 
 import android.net.Uri;
-
-import com.orm.SugarRecord;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,29 +45,5 @@ public class Database {
             records.add(new ImageRecord(entry.getKey(),entry.getValue()));
         }
         return records;
-    }
-
-
-    private class ImageTag extends SugarRecord{
-        Uri img;
-        String tag;
-
-        public ImageTag(){
-
-        }
-
-        public ImageTag(Uri img, String tag){
-            this.img=img;
-            this.tag=tag;
-        }
-
-        public Uri getUri(){
-            return img;
-        }
-
-        public String getTag(){
-            return tag;
-        }
-
     }
 }
