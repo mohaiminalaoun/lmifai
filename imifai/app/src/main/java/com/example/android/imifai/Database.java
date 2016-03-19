@@ -1,8 +1,9 @@
 package com.example.android.imifai;
 
 import android.net.Uri;
-
-import com.orm.SugarRecord;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class Database {
@@ -15,40 +16,34 @@ public class Database {
     private Database() {
     }
 
-    public class Image extends SugarRecord{
-        Uri uri;
-
-        public Image(){
-        }
-
-        public Image(Uri uri){
-            this.uri=uri;
+    public void addImage(Uri img, List<String> tags){
+        //so hack, much denormalized
+        for(String tag: tags){
+            ImageTag imgTag=new ImageTag(img, tag);
+            imgTag.save();
         }
     }
 
-    public class Tag extends SugarRecord{
-        String name;
+    public List<ImageRecord> getImages(String tag){
+        List<ImageTag> imageTags = ImageTag.find(ImageTag.class, "tag = ?", tag);
 
-        public Tag(){
+        HashMap<Uri, List<String>> images= new HashMap<>();
+        for (ImageTag imgTag : imageTags){
 
+            List<String> tags=null;
+            if ((tags=images.get(imgTag.getUri()))!=null){
+                tags.add(imgTag.getTag());
+            }
+            else{
+                tags=new ArrayList<>();
+                tags.add(imgTag.getTag());
+                images.put(imgTag.getUri(),tags);
+            }
         }
-
-        public Tag(String name){
-            this.name=name;
+        ArrayList<ImageRecord> records=new ArrayList<>();
+        for (HashMap.Entry<Uri, List<String>> entry : images.entrySet()) {
+            records.add(new ImageRecord(entry.getKey(),entry.getValue()));
         }
-    }
-
-    public class ImageTag extends SugarRecord{
-        Image img;
-        Tag tag;
-
-        public ImageTag(){
-
-        }
-
-        public ImageTag(Image img, Tag tag){
-            this.img=img;
-            this.tag=tag;
-        }
+        return records;
     }
 }
