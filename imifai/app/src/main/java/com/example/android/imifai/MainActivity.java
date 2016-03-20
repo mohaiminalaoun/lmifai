@@ -21,13 +21,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton mCameraButton;
+    private Button mGalleryButton;
     private final String TAG = MainActivity.class.getName();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mCameraButton =(ImageButton) findViewById(R.id.imageButton);
+
+        mGalleryButton =(Button) findViewById(R.id.galleryButton);
 
         //anonymous inner class as parameter
         mCameraButton.setOnClickListener(new View.OnClickListener() {
@@ -39,12 +44,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mGalleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                startGallery();
+            }
+        });
+
 
     }
 
     private void startCamera(){
 
         Intent intent  = new Intent(this, Camera.class);
+
+        startActivity(intent);
+    }
+
+    private void startGallery(){
+
+        Intent intent = new Intent(this, GalleryFragment.class);
 
         startActivity(intent);
     }
