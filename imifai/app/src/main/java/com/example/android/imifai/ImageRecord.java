@@ -8,16 +8,16 @@ import java.util.List;
  * Created by Shane on 3/19/2016.
  */
 public class ImageRecord implements Serializable {
-    Uri uri;
+    String uri;
     List<String> tags;
 
     public ImageRecord(Uri uri, List<String> tags){
-        this.uri=uri;
+        this.uri=uri.toString();
         this.tags=tags;
     }
 
     public Uri getUri(){
-        return uri;
+        return Uri.parse(uri);
     }
     public List<String> getTags(){
         return tags;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.GridView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -12,9 +13,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.io.Serializable;
 
-public class GalleryActivity extends Activity {
+public class GalleryActivity extends Activity implements Serializable {
 
-    private Serializable[] mImages;
+    private ImageRecord[] mImages;
     private ImageAdapter mImageAdapter;
     private GridView mGridview;
 
@@ -22,9 +23,17 @@ public class GalleryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        mGridview=(GridView)findViewById(R.id.gridview);
 
+        Log.d("TAG", "HI MY NAME IS VIKAS");
+
+        ImageRecordsWrapper wrapper =(ImageRecordsWrapper) getIntent().getSerializableExtra("images");
+        mImages = wrapper.records;
+
+
+        Log.d("TAG", ""+(mImages!=null));
         configureImage();
-        mImages = (Serializable[])getIntent().getSerializableExtra("image");
+        Log.d("TAG", ""+(mImages != null));
 
     }
 
@@ -38,7 +47,7 @@ public class GalleryActivity extends Activity {
         ImageLoader.getInstance().init(config);
 
         //Create Adapter
-        mImageAdapter = new ImageAdapter((ImageRecord[]) mImages,defaultOptions);
+        mImageAdapter = new ImageAdapter((ImageRecord[]) mImages,defaultOptions,this);
         mGridview.setAdapter(mImageAdapter);
     }
 }
