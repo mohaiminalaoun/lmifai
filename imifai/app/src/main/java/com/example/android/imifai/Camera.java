@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.clarify.api.ClarifaiClient;
@@ -28,6 +29,7 @@ public class Camera extends AppCompatActivity {
     private String mCurrentPhotoPath;
     private ImageView view;
     private Recognizer recognizer = new Recognizer();
+    private TextView mTagTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,10 +123,11 @@ public class Camera extends AppCompatActivity {
     }
 
 
-    //writing code to make table and add tags that are returned.
+    //writing code to make textView and add tags that are returned.
 
-    public void setTableRow(){
-
+    public void setTagTextView(String tags){
+        mTagTextView=(TextView)findViewById(R.id.tagTextView);
+        mTagTextView.setText(tags);
     }
 
 }
