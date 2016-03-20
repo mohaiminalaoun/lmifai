@@ -19,11 +19,13 @@
         >
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:background="#FF8D6F"
         android:scaleType="fitXY"/>
     </RelativeLayout>
 

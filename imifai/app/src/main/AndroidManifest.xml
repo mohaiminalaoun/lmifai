@@ -30,7 +30,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Search"></activity>
         <activity android:name=".GalleryActivity"></activity>
         <activity
             android:name=".Camera"
