@@ -45,7 +45,7 @@ public class GalleryFragment extends Fragment {
     }
     private void loadImage(){
         ImageLoader imageLoader = ImageLoader.getInstance();
-        
+
     }
 
 

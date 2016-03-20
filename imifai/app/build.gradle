@@ -6,7 +6,9 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.imifai"
-        minSdkVersion 16
+
+        minSdkVersion 23
+
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -26,4 +28,5 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.clarifai:clarifai-api-java:1.2.0'
 }
