@@ -3,6 +3,7 @@ package com.example.android.imifai;
 import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -53,6 +54,7 @@ public class Database {
         for(ImageTag tag: tags){
             tagset.add(tag.getTag());
         }
+        Log.d("Database",Integer.toString(tagset.size()));
         return tagset.toArray(new String[tagset.size()]);
     }
 
