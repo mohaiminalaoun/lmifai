@@ -10,10 +10,13 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
+//import com.clarify.api.ClarifaiClient;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -21,11 +24,13 @@ import java.util.StringTokenizer;
 public class Camera extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String mCurrentPhotoPath;
+    private ImageView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        view =(ImageView) findViewById(R.id.imageView);
         dispatchTakePictureIntent();
     }
 
@@ -35,15 +40,16 @@ public class Camera extends AppCompatActivity {
 
             File photoFile = null;
             try {
+                Log.d("DispactPic","creating image from file");
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 ex.printStackTrace();
             }
             if (photoFile != null) {
-                Log.d("DispatchTakePicture","taking pic");
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile));
+                Log.d("DispatchTakePicture", "taking pic");
+      /*          takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));*/
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
             //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -53,16 +59,30 @@ public class Camera extends AppCompatActivity {
    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Log.d("Camera onResult","Pic taken");
-            galleryAddPic();
+            Log.d("Camera onResult", "Pic taken");
+            Bundle extras = data.getExtras();
+
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "JPEG_" + timeStamp + "_";
+            String path = MediaStore.Images.Media.insertImage(getContentResolver()
+                    , imageBitmap, imageFileName, "");
+            Uri imageUri = Uri.parse(path);
+            Log.d("Parsing URI", imageUri.toString());
+            view.setImageURI(imageUri);
+            //view.setImageURI(Uri.fromFile(new File(path)));
+            Log.d("parse uri", "paresed");
+            //galleryAddPic();
 
         }
     }
 
     private void galleryAddPic() {
+        Log.d("galleryAdd","Adding to gallery : " +  mCurrentPhotoPath);
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
+        Log.d("file paht", f.getAbsolutePath());
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
