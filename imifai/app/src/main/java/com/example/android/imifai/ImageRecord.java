@@ -1,9 +1,6 @@
 package com.example.android.imifai;
 
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.List;
 
