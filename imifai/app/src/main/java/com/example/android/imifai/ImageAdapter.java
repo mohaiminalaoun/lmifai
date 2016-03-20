@@ -49,9 +49,10 @@ public class ImageAdapter extends BaseAdapter{
         }
     }
 
-    public ImageAdapter(ImageRecord[] imageRecords, DisplayImageOptions myoptions){
+    public ImageAdapter(ImageRecord[] imageRecords, DisplayImageOptions myoptions, Context context){
         records = imageRecords;
         options = myoptions;
+        mContext = new WeakReference<Context>(context);
     }
 
     public void setAdapter(ImageRecord[] imageRecords){

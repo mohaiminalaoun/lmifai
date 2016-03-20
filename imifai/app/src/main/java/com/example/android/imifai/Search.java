@@ -1,6 +1,8 @@
 package com.example.android.imifai;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,11 +24,12 @@ import android.os.Handler;
 import java.util.Queue;
 import java.util.logging.LogRecord;
 
-public class Search extends AppCompatActivity {
+public class Search extends AppCompatActivity implements Serializable {
     private MultiAutoCompleteTextView textView;
     private String[] tags = new String[0];
     private Handler mHandler;
     private final int COMPLETION_THRESHOLD = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,15 @@ public class Search extends AppCompatActivity {
     public void searchForTags(View view){
         String [] tags = textView.getText().toString().split(",");
         Queue<ImageRecord> records = Database.getInstance().getImages(Arrays.asList(tags));
+        Intent intent = new Intent(this, GalleryActivity.class);
+        ImageRecord[] arr=new ImageRecord[records.size()];
+        int i=0;
+        for(ImageRecord rec: records){
+            arr[i]=rec;
+            i++;
+        }
+        intent.putExtra("images", new ImageRecordsWrapper(arr));
+        startActivity(intent);
         Log.d("All images", records.poll().getUri().toString());
 
     }
