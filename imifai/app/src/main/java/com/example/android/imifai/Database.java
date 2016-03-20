@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -46,6 +47,14 @@ public class Database {
         return orderResults(images);
     }
 
+    public List<String> getAllTags(){
+        List<ImageTag> tags = ImageTag.listAll(ImageTag.class);
+        HashSet<String> tagset=new HashSet<>();
+        for(ImageTag tag: tags){
+            tagset.add(tag.getTag());
+        }
+        return new ArrayList<String>(tagset);
+    }
 
     @NonNull
     private PriorityQueue<ImageRecord> orderResults(HashMap<Uri, List<String>> images) {
