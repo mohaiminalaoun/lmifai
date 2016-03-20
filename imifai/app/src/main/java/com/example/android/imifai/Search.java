@@ -2,18 +2,23 @@ package com.example.android.imifai;
 
 import android.content.Context;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import android.os.Handler;
+
+import java.util.Queue;
 import java.util.logging.LogRecord;
 
 public class Search extends AppCompatActivity {
@@ -58,6 +63,13 @@ public class Search extends AppCompatActivity {
             }
         };
         new Thread(runnable).start();
+    }
+
+    public void searchForTags(View view){
+        String [] tags = textView.getText().toString().split(",");
+        Queue<ImageRecord> records = Database.getInstance().getImages(Arrays.asList(tags));
+        Log.d("All images", records.poll().getUri().toString());
+
     }
 
     private static final String[] COUNTRIES = new String[] {
