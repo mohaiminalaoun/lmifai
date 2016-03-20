@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 //import com.clarify.api.ClarifaiClient;
 import java.io.File;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Camera extends AppCompatActivity {
@@ -56,9 +58,13 @@ public class Camera extends AppCompatActivity {
             Uri imageUri = Uri.parse(path);
             view.setImageURI(imageUri);
 
-            recognizer.recognizeImage(imageUri,this);
+            recognizer.recognizeImage(imageUri, this);
 
         }
+    }
+
+    public void gotTagsBack(List<String> tags){
+        Toast.makeText(this, tags.get(0), Toast.LENGTH_LONG);
     }
 
 
@@ -87,6 +93,13 @@ public class Camera extends AppCompatActivity {
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         Log.d("CAMERA", "Photo Path :" +mCurrentPhotoPath);
         return image;
+    }
+
+
+    //writing code to make table and add tags that are returned.
+
+    public void setTableRow(){
+
     }
 
 }
