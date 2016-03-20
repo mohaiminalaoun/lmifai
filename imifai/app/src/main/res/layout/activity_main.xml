@@ -40,20 +40,23 @@
         android:layout_toEndOf="@+id/title"/>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cameraIcon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
-        app:layout_anchorGravity="bottom|right|end"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="93dp"
-        android:background="@android:drawable/ic_menu_camera"
-        android:backgroundTint="@drawable/ic_camera_white_48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:theme="@style/AppTheme"/>
+        <ImageButton
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:id="@+id/imageButton"
+            android:background="@drawable/oval"
+            android:elevation="10dp"
+            android:layout_marginBottom="68dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_camera_white_36dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
 
 
     </RelativeLayout>

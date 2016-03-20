@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.cameraIcon);
-        fab.setImageResource(R.drawable.ic_camera_black_48dp);
-
+       // fab.setImageResource(R.drawable.ic_camera_black_48dp);
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_black_48dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
