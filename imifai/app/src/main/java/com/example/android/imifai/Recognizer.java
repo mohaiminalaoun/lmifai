@@ -8,6 +8,7 @@ import android.net.Credentials;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.clarifai.api.ClarifaiClient;
 import com.clarifai.api.RecognitionRequest;
@@ -110,10 +111,16 @@ public class Recognizer {
             }
 
             ((Camera) context).gotTagsBack(tagNames);
+            ((Camera)context).setTagTextView(listString);
 
             Log.d(TAG, listString);
             Database.getInstance().addImage(uri, tagNames);
         }
+
+
+
+
+
     }
 
 }
