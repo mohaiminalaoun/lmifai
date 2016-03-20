@@ -47,13 +47,13 @@ public class Database {
         return orderResults(images);
     }
 
-    public List<String> getAllTags(){
+    public String[] getAllTags(){
         List<ImageTag> tags = ImageTag.listAll(ImageTag.class);
         HashSet<String> tagset=new HashSet<>();
         for(ImageTag tag: tags){
             tagset.add(tag.getTag());
         }
-        return new ArrayList<String>(tagset);
+        return tagset.toArray(new String[tagset.size()]);
     }
 
     @NonNull
