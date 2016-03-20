@@ -12,37 +12,60 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ImageButton mCameraButton;
+    private Button mGalleryButton;
     private final String TAG = MainActivity.class.getName();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, Camera.class);
-        startActivity(intent);
+        mCameraButton =(ImageButton) findViewById(R.id.imageButton);
 
-/*        FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.cameraIcon);
-        fab.setImageResource(R.drawable.ic_camera_black_48dp);
+        mGalleryButton =(Button) findViewById(R.id.galleryButton);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        //anonymous inner class as parameter
+        mCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 startCamera();
             }
-        });*/
+        });
+
+        mGalleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                startGallery();
+            }
+        });
+
+
     }
 
     private void startCamera(){
-        //here we start new activity
+
         Intent intent  = new Intent(this, Camera.class);
+
+        startActivity(intent);
+    }
+
+    private void startGallery(){
+
+        Intent intent = new Intent(this, GalleryFragment.class);
 
         startActivity(intent);
     }
