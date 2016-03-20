@@ -1,11 +1,15 @@
 package com.example.android.imifai;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -13,7 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.io.Serializable;
 
-public class GalleryActivity extends Activity implements Serializable {
+public class GalleryActivity extends Activity implements Serializable,AdapterView.OnItemClickListener {
 
     private ImageRecord[] mImages;
     private ImageAdapter mImageAdapter;
@@ -33,9 +37,12 @@ public class GalleryActivity extends Activity implements Serializable {
 
         Log.d("TAG", ""+(mImages!=null));
         configureImage();
-        Log.d("TAG", ""+(mImages != null));
+        Log.d("TAG", "" + (mImages != null));
+
+        mGridview.setOnItemClickListener(this);
 
     }
+
 
     private void configureImage(){
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
@@ -49,5 +56,12 @@ public class GalleryActivity extends Activity implements Serializable {
         //Create Adapter
         mImageAdapter = new ImageAdapter((ImageRecord[]) mImages,defaultOptions,this);
         mGridview.setAdapter(mImageAdapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, Camera.class);
+        intent.putExtra("imageRecord",(ImageRecord) mImageAdapter.getItem(position));
+        startActivity(intent);
     }
 }

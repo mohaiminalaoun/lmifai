@@ -44,7 +44,15 @@ public class Camera extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         view =(ImageView) findViewById(R.id.imageView);
-        dispatchTakePictureIntent();
+
+        ImageRecord record = (ImageRecord) getIntent().getSerializableExtra("imageRecord");
+        if(record!=null) {
+            view.setImageURI(record.getUri());
+            gotTagsBack(record.getTags());
+        }
+        else {
+            dispatchTakePictureIntent();
+        }
     }
 
     private void dispatchTakePictureIntent() {
