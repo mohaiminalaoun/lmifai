@@ -25,7 +25,7 @@ import java.util.List;
 public class Recognizer {
 
     private static final String TAG = Recognizer.class.getSimpleName();
-    private static final double PROBABILITY_CUTOFF = 0.3;
+    private static final double PROBABILITY_CUTOFF = 0.8;
 
     private final ClarifaiClient client = new ClarifaiClient(
             com.example.android.imifai.Credentials.CLIENT_ID,
@@ -96,6 +96,14 @@ public class Recognizer {
             if (tag.getProbability() > PROBABILITY_CUTOFF) {
                 tagNames.add(tag.getName());
             }
+
+            String listString="";
+            for (String s : tagNames)
+            {
+                listString += s + "\t";
+            }
+
+            Log.d("Recognizer", listString);
             Database.getInstance().addImage(uri, tagNames);
         }
     }
