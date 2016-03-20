@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.imifai">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-sdk android:minSdkVersion="23"/>
 
     <application
         android:allowBackup="true"
@@ -23,4 +23,6 @@
         </activity>
         <activity android:name=".Camera"></activity>
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>
