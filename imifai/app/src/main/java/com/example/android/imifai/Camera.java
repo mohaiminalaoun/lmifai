@@ -1,15 +1,18 @@
 package com.example.android.imifai;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -189,6 +193,10 @@ public class Camera extends AppCompatActivity {
                 button = new Button(mContext);
                 button.setLayoutParams(new GridView.LayoutParams
                         (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                button.setLayoutParams(new ActionBar.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+                button.setBackgroundColor(Color.parseColor("#21B684"));
+                button.setTextColor(Color.parseColor("#64ffffff"));
                 button.setPadding(1, 1, 1, 1);
                 button.setText(mtags[position]);
             } else {
@@ -200,3 +208,18 @@ public class Camera extends AppCompatActivity {
 
     }
 }
+/*
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_centerVertical="true"
+android:layout_centerHorizontal="true"
+android:layout_marginLeft="30dp"
+android:layout_marginRight="30dp"
+android:background="#21B684"
+android:textStyle="bold"
+android:textColor="#64ffffff"
+android:singleLine="false"/>
+
+ */

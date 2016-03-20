@@ -68,7 +68,8 @@
             android:background="#21B684"
             android:textStyle="bold"
             android:drawableLeft="@android:drawable/ic_menu_gallery"
-            android:textColor="#64ffffff"/>
+            android:textColor="#64ffffff"
+            android:singleLine="false"/>
 
 
     </RelativeLayout>
