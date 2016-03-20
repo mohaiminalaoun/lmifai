@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -62,6 +63,17 @@ public class Database {
         }
         Log.d("Database", Integer.toString(tagset.size()));
         return tagset.toArray(new String[tagset.size()]);
+    }
+
+    public ArrayList<ImageRecord> getAllImages(){
+        List<ImageTag> imageTags = ImageTag.listAll(ImageTag.class);
+        HashMap<Uri, List<String>> map=new HashMap<>();
+        ArrayList<ImageRecord> records=new ArrayList<>();
+        populateHashMap(imageTags,map);
+        for (HashMap.Entry<Uri, List<String>> entry : map.entrySet()) {
+            records.add(new ImageRecord(entry.getKey(), entry.getValue()));
+        }
+        return records;
     }
 
     @NonNull

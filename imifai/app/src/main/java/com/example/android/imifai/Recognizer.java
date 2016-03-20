@@ -116,11 +116,6 @@ public class Recognizer {
             Log.d(TAG, listString);
             Database.getInstance().addImage(uri, tagNames);
         }
-
-
-
-
-
     }
 
 }

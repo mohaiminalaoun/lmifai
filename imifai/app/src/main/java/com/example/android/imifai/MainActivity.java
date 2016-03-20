@@ -1,22 +1,13 @@
 package com.example.android.imifai;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,9 +55,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGallery(){
-
-        Intent intent = new Intent(this, GalleryFragment.class);
-
+        ArrayList<ImageRecord> records = Database.getInstance().getAllImages();
+        Intent intent = new Intent(this, GalleryActivity.class);
+        ImageRecord[] arr=new ImageRecord[records.size()];
+        int i=0;
+        for(ImageRecord rec: records){
+            arr[i]=rec;
+            i++;
+        }
+        intent.putExtra("images", new ImageRecordsWrapper(arr));
         startActivity(intent);
     }
 
