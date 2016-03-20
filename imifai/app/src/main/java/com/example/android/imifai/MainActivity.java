@@ -13,27 +13,29 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ImageButton mCameraButton;
     private final String TAG = MainActivity.class.getName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStartButton =(Button) findViewById(R.id.imageButton);
+        mCameraButton =(ImageButton) findViewById(R.id.imageButton);
 
         //anonymous inner class as parameter
-        mStartButton.setOnClickListener(new View.OnClickListener() {
+        mCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String name = mNameField.getText().toString();
-                startStory(name);
+
+                startCamera();
             }
         });
 
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startCamera(){
-        //here we start new activity
+
         Intent intent  = new Intent(this, Camera.class);
 
         startActivity(intent);
