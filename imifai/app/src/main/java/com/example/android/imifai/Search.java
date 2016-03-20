@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import android.os.Handler;
+import android.widget.Toast;
 
 import java.util.Queue;
 import java.util.logging.LogRecord;
@@ -72,6 +73,12 @@ public class Search extends AppCompatActivity implements Serializable {
     public void searchForTags(View view){
         String [] tags = textView.getText().toString().split(",");
         Queue<ImageRecord> records = Database.getInstance().getImages(Arrays.asList(tags));
+
+        if(records.size()==0){
+            Toast.makeText(this, "No results were found", Toast.LENGTH_LONG);
+            return;
+        }
+
         Intent intent = new Intent(this, GalleryActivity.class);
         ImageRecord[] arr=new ImageRecord[records.size()];
         int i=0;

@@ -34,7 +34,11 @@ public class Database {
 
     public Queue<ImageRecord> getImages(String tag){
         List<ImageTag> imageTags = ImageTag.find(ImageTag.class, "tag = ?", tag);
+        if (imageTags==null || imageTags.size()==0){
+            return new PriorityQueue<>();
+        }
         HashMap<Uri, List<String>> images= new HashMap<>();
+
         populateHashMap(imageTags, images);
         return orderResults(images);
     }
@@ -43,7 +47,9 @@ public class Database {
         HashMap<Uri, List<String>> images= new HashMap<>();
         for(String tag: tags){
             List<ImageTag> imageTags = ImageTag.find(ImageTag.class, "tag = ?", tag);
-            populateHashMap(imageTags, images);
+            if(imageTags!=null && imageTags.size()>0) {
+                populateHashMap(imageTags, images);
+            }
         }
         return orderResults(images);
     }
@@ -54,15 +60,17 @@ public class Database {
         for(ImageTag tag: tags){
             tagset.add(tag.getTag());
         }
-        Log.d("Database",Integer.toString(tagset.size()));
+        Log.d("Database", Integer.toString(tagset.size()));
         return tagset.toArray(new String[tagset.size()]);
     }
 
     @NonNull
     private PriorityQueue<ImageRecord> orderResults(HashMap<Uri, List<String>> images) {
         PriorityQueue<ImageRecord> records=new PriorityQueue<ImageRecord>(10,new RecordComparator());
-        for (HashMap.Entry<Uri, List<String>> entry : images.entrySet()) {
-            records.add(new ImageRecord(entry.getKey(), entry.getValue()));
+        if(images!=null && images.size()>0){
+            for (HashMap.Entry<Uri, List<String>> entry : images.entrySet()) {
+                records.add(new ImageRecord(entry.getKey(), entry.getValue()));
+            }
         }
         return records;
     }
