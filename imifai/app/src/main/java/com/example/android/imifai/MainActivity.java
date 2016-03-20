@@ -22,22 +22,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, Camera.class);
-        startActivity(intent);
-
-        FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.cameraIcon);
-       // fab.setImageResource(R.drawable.ic_camera_black_48dp);
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_black_48dp));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                startCamera();
-            }
-        });
+       
     }
 
     private void startCamera(){
