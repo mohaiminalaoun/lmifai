@@ -1,7 +1,12 @@
 package com.example.android.imifai;
 
 import android.net.Uri;
+import android.util.Log;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -13,7 +18,8 @@ public class ImageRecord implements Serializable {
 
     public ImageRecord(Uri uri, List<String> tags){
         this.uri=uri.toString();
-        this.tags=tags;
+        HashSet<String> dedup=new HashSet<>(tags);
+        this.tags=new ArrayList<>(dedup);
     }
 
     public Uri getUri(){
