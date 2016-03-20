@@ -111,7 +111,7 @@ public class Recognizer {
             }
 
             ((Camera) context).gotTagsBack(tagNames);
-            ((Camera)context).setTagTextView(listString);
+           // ((Camera)context).setTagTextView(listString);
 
             Log.d(TAG, listString);
             Database.getInstance().addImage(uri, tagNames);
