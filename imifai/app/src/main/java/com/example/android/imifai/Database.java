@@ -59,7 +59,7 @@ public class Database {
         List<ImageTag> tags = ImageTag.listAll(ImageTag.class);
         HashSet<String> tagset=new HashSet<>();
         for(ImageTag tag: tags){
-            tagset.add(tag.getTag());
+            tagset.add(tag.getTag().toString());
         }
         Log.d("Database", Integer.toString(tagset.size()));
         return tagset.toArray(new String[tagset.size()]);
