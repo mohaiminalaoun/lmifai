@@ -1,6 +1,7 @@
 package com.example.android.imifai;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,6 +11,12 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -83,6 +91,17 @@ public class Camera extends AppCompatActivity {
     public void gotTagsBack(List<String> tags){
         Log.d("LALALA", "GOT mah tags bacckk");
         Toast.makeText(this, tags.get(0), Toast.LENGTH_LONG);
+        GridView gridview = (GridView) findViewById(R.id.gridViewButtons);
+        gridview.setAdapter(new ButtonAdapter(this, tags));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void galleryAddPic() {
@@ -125,9 +144,51 @@ public class Camera extends AppCompatActivity {
 
     //writing code to make textView and add tags that are returned.
 
-    public void setTagTextView(String tags){
+/*    public void setTagTextView(String tags){
         mTagTextView=(TextView)findViewById(R.id.tagTextView);
         mTagTextView.setText(tags);
-    }
+    }*/
 
+
+    public class ButtonAdapter extends BaseAdapter {
+        private Context mContext;
+        private String[] mtags;
+
+        public ButtonAdapter(Context c, List<String> tags) {
+            Log.d("camera", "In imageadapter creator");
+            mContext = c;
+            mtags = tags.toArray(new String[tags.size()]);
+            Log.d("tags", Arrays.toString(mtags));
+        }
+
+        public int getCount() {
+            return mtags.length;
+        }
+
+        public Object getItem(int position) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // create a new ImageView for each item referenced by the Adapter
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Button button;
+            if (convertView == null) {
+                // if it's not recycled, initialize some attributes
+                button = new Button(mContext);
+                button.setLayoutParams(new GridView.LayoutParams
+                        (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                button.setPadding(1, 1, 1, 1);
+                button.setText(mtags[position]);
+            } else {
+                button = (Button) convertView;
+            }
+
+            return button;
+        }
+
+    }
 }
