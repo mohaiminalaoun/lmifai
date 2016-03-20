@@ -195,10 +195,11 @@ public class Camera extends AppCompatActivity {
                         (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 button.setLayoutParams(new ActionBar.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
-                button.setBackgroundColor(Color.parseColor("#21B684"));
-                button.setTextColor(Color.parseColor("#64ffffff"));
+                button.setBackgroundColor(Color.parseColor("#FF714C"));
+                button.setTextColor(Color.parseColor("#ffffffff"));
                 button.setPadding(1, 1, 1, 1);
                 button.setText(mtags[position]);
+                button.setSingleLine(true);
             } else {
                 button = (Button) convertView;
             }
