@@ -40,7 +40,22 @@ public class Camera extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+            File photoFile = null;
+            try {
+                Log.d("DispactPic","creating image from file");
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                ex.printStackTrace();
+            }
+            if (photoFile != null) {
+                Log.d("DispatchTakePicture", "taking pic");
+      /*          takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));*/
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+            //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -64,9 +79,19 @@ public class Camera extends AppCompatActivity {
     }
 
     public void gotTagsBack(List<String> tags){
+        Log.d("LALALA", "GOT mah tags bacckk");
         Toast.makeText(this, tags.get(0), Toast.LENGTH_LONG);
     }
 
+    private void galleryAddPic() {
+        Log.d("galleryAdd","Adding to gallery : " +  mCurrentPhotoPath);
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        Log.d("file paht", f.getAbsolutePath());
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
 
 
     private File createImageFile() throws IOException {

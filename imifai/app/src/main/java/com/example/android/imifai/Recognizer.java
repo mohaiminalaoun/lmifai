@@ -89,7 +89,12 @@ public class Recognizer {
         }
     }
 
+
     private void resultCallback(Uri uri, RecognitionResult result, Context context) {
+        if(result==null){
+            Log.d(TAG, "recognition result is null");
+            return;
+        }
         List<Tag> tags = result.getTags();
 
         ArrayList<String> tagNames = new ArrayList<>();
@@ -104,12 +109,10 @@ public class Recognizer {
                 listString += s + "\t";
             }
 
-            Log.d("Recognizer", listString);
             ((Camera) context).gotTagsBack(tagNames);
+
+            Log.d(TAG, listString);
             Database.getInstance().addImage(uri, tagNames);
-
-
-
         }
     }
 
