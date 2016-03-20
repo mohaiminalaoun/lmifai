@@ -1,6 +1,7 @@
 package com.example.android.imifai;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Credentials;
@@ -70,7 +71,7 @@ public class Recognizer {
         }
     }
 
-    public void recognizeImage(final Uri uri, Context context){
+    public void recognizeImage(final Uri uri, final Context context){
         Bitmap bitmap = loadBitmapFromUri(uri, context);
         if (bitmap != null) {
             // Run recognition on a background thread since it makes a network call.
@@ -80,7 +81,7 @@ public class Recognizer {
                 }
 
                 @Override protected void onPostExecute(RecognitionResult result) {
-                    resultCallback(uri, result);
+                    resultCallback(uri, result, context);
                 }
             }.execute(bitmap);
         } else {
@@ -88,7 +89,12 @@ public class Recognizer {
         }
     }
 
-    private void resultCallback(Uri uri, RecognitionResult result) {
+
+    private void resultCallback(Uri uri, RecognitionResult result, Context context) {
+        if(result==null){
+            Log.d(TAG, "recognition result is null");
+            return;
+        }
         List<Tag> tags = result.getTags();
 
         ArrayList<String> tagNames = new ArrayList<>();
@@ -103,7 +109,9 @@ public class Recognizer {
                 listString += s + "\t";
             }
 
-            Log.d("Recognizer", listString);
+            ((Camera) context).gotTagsBack(tagNames);
+
+            Log.d(TAG, listString);
             Database.getInstance().addImage(uri, tagNames);
         }
     }
