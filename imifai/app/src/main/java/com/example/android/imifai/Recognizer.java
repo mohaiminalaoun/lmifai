@@ -78,10 +78,12 @@ public class Recognizer {
             // Run recognition on a background thread since it makes a network call.
             new AsyncTask<Bitmap, Void, RecognitionResult>() {
                 @Override protected RecognitionResult doInBackground(Bitmap... bitmaps) {
+                    Log.d(TAG, "I'm inside doInBg");
                     return recognizeBitmap(bitmaps[0]);
                 }
 
                 @Override protected void onPostExecute(RecognitionResult result) {
+                    Log.d(TAG,"I'm inside onPostExecute");
                     resultCallback(uri, result, context);
                 }
             }.execute(bitmap);
@@ -113,9 +115,8 @@ public class Recognizer {
             ((Camera) context).gotTagsBack(tagNames);
            // ((Camera)context).setTagTextView(listString);
 
-            Log.d(TAG, listString);
-            Database.getInstance().addImage(uri, tagNames);
         }
+        Database.getInstance().addImage(uri, tagNames);
     }
 
 }
