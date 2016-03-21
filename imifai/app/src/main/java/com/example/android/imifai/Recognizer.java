@@ -112,11 +112,11 @@ public class Recognizer {
                 listString += s + "\t";
             }
 
-            ((Camera) context).gotTagsBack(tagNames);
            // ((Camera)context).setTagTextView(listString);
 
         }
         Database.getInstance().addImage(uri, tagNames);
+        ((Camera) context).gotTagsBack(tagNames);
     }
 
 }
