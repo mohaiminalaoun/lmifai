@@ -26,6 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.clarify.api.ClarifaiClient;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -93,7 +98,17 @@ public class Camera extends AppCompatActivity {
             String path = MediaStore.Images.Media.insertImage(getContentResolver()
                     , imageBitmap, imageFileName, "");
             Uri imageUri = Uri.parse(path);
-            view.setImageURI(imageUri);
+          //  view.setImageURI(imageUri);
+
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                    .threadPoolSize(3)
+                    .build();
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .imageScaleType(ImageScaleType.NONE)
+                    .bitmapConfig(Bitmap.Config.ARGB_8888)
+                    .build();
+            ImageLoader.getInstance().init(config);
+            ImageLoader.getInstance().displayImage(imageUri.toString(),view,defaultOptions);
 
             recognizer.recognizeImage(imageUri, this);
 

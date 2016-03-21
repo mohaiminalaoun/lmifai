@@ -1,7 +1,10 @@
 package com.example.android.imifai;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,4 +99,6 @@ public class ImageAdapter extends BaseAdapter{
 
         return v;
     }
+
+
 }

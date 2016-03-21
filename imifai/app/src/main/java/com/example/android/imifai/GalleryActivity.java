@@ -3,6 +3,7 @@ package com.example.android.imifai;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -54,7 +56,7 @@ public class GalleryActivity extends Activity implements Serializable,AdapterVie
         mImages = wrapper.records;
 
 
-        Log.d("TAG", ""+(mImages!=null));
+        Log.d("TAG", "" + (mImages != null));
         configureImage();
         Log.d("TAG", "" + (mImages != null));
 
@@ -65,10 +67,11 @@ public class GalleryActivity extends Activity implements Serializable,AdapterVie
 
     private void configureImage(){
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .threadPoolSize(1)
                 .build();
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
+        .imageScaleType(ImageScaleType.NONE)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
                 .build();
         ImageLoader.getInstance().init(config);
 
